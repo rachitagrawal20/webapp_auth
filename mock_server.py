@@ -16,16 +16,11 @@ def get_pw(username):
     return users.get(username)
 
 # Route for handling XML response
-@app.route('/mock-endpoint', methods=['POST'])
+@app.route('/mock-endpoint', methods=['GET'])
 @auth.login_required
 def mock_endpoint():
-    # Check if request content is XML
-    if request.content_type != 'application/xml':
-        return Response("Invalid Content-Type", status=400)
 
-    # Parse incoming XML (if needed)
-    incoming_xml = request.data.decode('utf-8')
-    print("Received XML:", incoming_xml)  # Optional: print XML for debug
+    print("Received request:")  # Optional: print XML for debug
 
     # Define a sample XML response
     response_xml = """<?xml version="1.0"?>
