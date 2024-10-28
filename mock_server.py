@@ -1,6 +1,7 @@
 from flask import Flask, request, Response
 from flask_httpauth import HTTPBasicAuth
 import os
+import requests
 
 # Initialize Flask app and auth
 app = Flask(__name__)
@@ -20,7 +21,9 @@ def get_pw(username):
 @auth.login_required
 def mock_endpoint():
 
-    print("Received request:")  # Optional: print XML for debug
+    print("Received request:")
+    url = 'https://xmlfeed-2.free.beeceptor.com/feed'# Optional: print XML for debug
+    feed = requests.get(url, timeout=50)
 
     # Define a sample XML response
     response_xml = """<?xml version="1.0"?>
@@ -30,7 +33,7 @@ def mock_endpoint():
     </response>"""
 
     # Return response with XML content type
-    return Response(response_xml, mimetype='application/xml')
+    return Response(feed.content, mimetype='application/xml')
 
 # Run the server
 if __name__ == "__main__":
